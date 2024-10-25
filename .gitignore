@@ -1,0 +1,65 @@
+# .gitignore for ASP.NET Core Web API project
+
+# Ignore Visual Studio temporary files, build results, and
+# user-specific files
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/*
+
+# Ignore build and publish folders
+bin/
+obj/
+
+# ASP.NET Core
+appsettings*.json
+appsettings.*.json
+
+# Logs
+logs/
+*.log
+
+# NPM packages (if you're using Node.js for frontend dependencies)
+node_modules/
+
+# Dotnet Pack output
+*.nupkg
+*.snupkg
+
+# Ignore files from the NuGet Packages folder
+packages/
+
+# JetBrains Rider temp files
+.idea/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Image file caches
+*.iobj
+*.pch
+*.ipdb
+
+# Folder config file
+.DS_Store
+
+# Tooling files
+*.vscode
+
+# Resharper and similar tools
+*.DotSettings.user
+_ReSharper.Caches/
+
+# Ignore the coverage tool output
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+
+# ASP.NET Code Coverage Results
+TestResults/
