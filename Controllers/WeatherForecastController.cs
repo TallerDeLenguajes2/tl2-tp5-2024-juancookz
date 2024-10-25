@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MiWebAPI.Controllers;
+namespace tl2_tp5_2024_juancookz.Controllers;
 
 [ApiController]
 [Route("[controller]")]
