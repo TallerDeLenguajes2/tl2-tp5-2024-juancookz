@@ -1,6 +1,0 @@
-@tl2_tp5_2024_juancookz_HostAddress = http://localhost:5242
-
-GET {{tl2_tp5_2024_juancookz_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
