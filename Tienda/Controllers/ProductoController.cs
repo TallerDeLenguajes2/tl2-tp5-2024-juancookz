@@ -19,7 +19,6 @@ public class ProductoController : ControllerBase
         {
             return BadRequest("Producto inválido. Verifica que la descripción no esté vacía y el precio sea mayor a 0.");
         }
-        ProductoRepository productoRepository = new ProductoRepository(@"Data Source=db\Tienda.db;Cache=Shared");
         Productos producto = new Productos(descripcion, precio);
         productoRepository.CrearProducto(producto);
         return Ok();
@@ -27,7 +26,16 @@ public class ProductoController : ControllerBase
     [HttpGet]
     public ActionResult ListarProductos()
     {
-        List<Productos> productos= productoRepository.ListarProductos();
+        List<Productos> productos = productoRepository.ListarProductos();
         return Ok(productos);
+    }
+    [HttpPut]
+    public ActionResult EditarProducto([FromForm] int id, string nuevaDescripcion)
+    {
+        Productos producto = productoRepository.ObtenerProducto(id);
+        if (producto == null) { return BadRequest("No se encontro el producto"); }
+        producto.Descripcion = nuevaDescripcion;
+        productoRepository.ModificarProducto(id, producto);
+        return Ok();
     }
 }
