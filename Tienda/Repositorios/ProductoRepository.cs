@@ -23,9 +23,18 @@ public class ProductoRepository
             connection.Close();
         }
     }
-    public void ModificarProducto(int idproducto, Productos producto)
+    public void ModificarProducto(Productos producto)
     {
-        
+        string query = @"UPDATE Productos SET Descripcion = @descripcion WHERE idProducto = @id;";
+        using (SqliteConnection connection = new SqliteConnection(_stringConnection))
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(query, connection);
+            command.Parameters.Add(new SqliteParameter("@descripcion", producto.Descripcion));
+            command.Parameters.Add(new SqliteParameter("@id", producto.Idproducto));
+            command.ExecuteNonQuery();
+            connection.Close ();
+        }
     }
     public List<Productos> ListarProductos()
     {

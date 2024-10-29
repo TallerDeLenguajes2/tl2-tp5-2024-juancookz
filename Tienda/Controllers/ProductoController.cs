@@ -35,7 +35,7 @@ public class ProductoController : ControllerBase
         Productos producto = productoRepository.ObtenerProducto(id);
         if (producto == null) { return BadRequest("No se encontro el producto"); }
         producto.Descripcion = nuevaDescripcion;
-        productoRepository.ModificarProducto(id, producto);
+        productoRepository.ModificarProducto(producto);
         return Ok();
     }
 }
