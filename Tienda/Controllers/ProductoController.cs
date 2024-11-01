@@ -19,23 +19,23 @@ public class ProductoController : ControllerBase
         {
             return BadRequest("Producto inválido. Verifica que la descripción no esté vacía y el precio sea mayor a 0.");
         }
-        Productos producto = new Productos(descripcion, precio);
-        productoRepository.CrearProducto(producto);
+        Producto producto = new Producto(descripcion, precio);
+        productoRepository.Create(producto);
         return Ok();
     }
     [HttpGet]
     public ActionResult ListarProductos()
     {
-        List<Productos> productos = productoRepository.ListarProductos();
+        List<Producto> productos = productoRepository.GetAll();
         return Ok(productos);
     }
-    [HttpPut]
-    public ActionResult EditarProducto([FromForm] int id, string nuevaDescripcion)
+    [HttpPut("{id}")]
+    public ActionResult EditarProducto(int id, string nuevaDescripcion)
     {
-        Productos producto = productoRepository.ObtenerProducto(id);
+        Producto producto = productoRepository.Get(id);
         if (producto == null) { return BadRequest("No se encontro el producto"); }
         producto.Descripcion = nuevaDescripcion;
-        productoRepository.ModificarProducto(producto);
+        productoRepository.Modify(producto);
         return Ok();
     }
 }

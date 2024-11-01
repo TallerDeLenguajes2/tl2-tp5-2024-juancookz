@@ -1,4 +1,4 @@
-public class Presupuestos
+public class Presupuesto
 {
     private int idPresupuesto;
     private string nombreDestinatario;

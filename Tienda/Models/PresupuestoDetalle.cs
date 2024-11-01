@@ -1,5 +1,5 @@
 public class PresupuestoDetalle
 {
-    private Productos producto;
+    private Producto producto;
     private int cantidad;
 }
