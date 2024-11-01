@@ -2,12 +2,10 @@ using Microsoft.Data.Sqlite;
 public class ProductoRepository
 {
     private string _stringConnection;
-
     public ProductoRepository(string stringConnection)
     {
         _stringConnection = stringConnection;
     }
-
     public void Create(Producto producto)
     {
         string query = @"INSERT INTO Productos (Descripcion, Precio) VALUES (@Descripcion, @Precio);";
@@ -84,7 +82,6 @@ public class ProductoRepository
         }
         return producto;
     }
-
     public void Delete(Producto producto)
     {
         string query = @"DELETE FROM Productos WHERE idProducto = @id;";
