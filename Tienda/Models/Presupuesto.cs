@@ -5,6 +5,13 @@ public class Presupuesto
     private List<PresupuestoDetalle> detalle;
     private DateTime fechaCreacion;
 
+    public Presupuesto(string nombreDestinatario, DateTime fechaCreacion)
+    {
+        NombreDestinatario = nombreDestinatario;
+        detalle = new List<PresupuestoDetalle>();
+        FechaCreacion = fechaCreacion;
+    }
+
     public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }
     public string NombreDestinatario { get => nombreDestinatario; set => nombreDestinatario = value; }
     public List<PresupuestoDetalle> Detalle { get => detalle; set => detalle = value; }
