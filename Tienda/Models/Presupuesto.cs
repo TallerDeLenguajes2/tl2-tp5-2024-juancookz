@@ -10,6 +10,7 @@ public class Presupuesto
         NombreDestinatario = nombreDestinatario;
         detalle = new List<PresupuestoDetalle>();
         FechaCreacion = fechaCreacion;
+        detalle = new List<PresupuestoDetalle>();
     }
 
     public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }
@@ -17,16 +18,17 @@ public class Presupuesto
     public List<PresupuestoDetalle> Detalle { get => detalle; set => detalle = value; }
     public DateTime FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
 
-    public float MontoPresupuesto()
+    public double MontoPresupuesto()
     {
-        return 0;
+        double monto = detalle.Sum(d => d.Cantidad * d.Producto.Precio);
+        return monto;
     }
-    public float MontoPresupuestoConIva()
+    public double MontoPresupuestoConIva()
     {
-        return 0;
+        return MontoPresupuesto() * 1.21;
     }
     public int CantidadProductos()
     {
-        return 0;
+        return detalle.Sum(d => d.Cantidad);
     }
 }
