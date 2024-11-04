@@ -22,9 +22,9 @@ public class PresupuestoRepository
             connection.Close();
         }
     }
-    public List<Producto> GetAll()
+    public List<Presupuesto> GetAll()
     {
-        List<Producto> productos = [];
+        List<Presupuesto> presupuestos = [];
 
         string query = @"SELECT P.idPresupuesto, P.NombreDestinatario, P.FechaCreacion FROM Presupuestos P;";
         using (SqliteConnection connection = new SqliteConnection(_stringConnection))
@@ -34,14 +34,14 @@ public class PresupuestoRepository
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var producto = new Producto();
-                producto.Idproducto = Convert.ToInt32(reader["idProducto"]);
-                producto.Descripcion = reader["Descripcion"].ToString();
-                producto.Precio = Convert.ToInt32(reader["Precio"]);
-                productos.Add(producto);
+                var presupuesto = new Presupuesto();
+                presupuesto.IdPresupuesto = Convert.ToInt32(reader["idPresupuesto"]);
+                presupuesto.NombreDestinatario = reader["NombreDestinatario"].ToString();
+                presupuesto.FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]);
+                presupuestos.Add(presupuesto);
             }
             connection.Close();
         }
-        return productos;
+        return presupuestos;
     }
 }

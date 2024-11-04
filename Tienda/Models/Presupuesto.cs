@@ -1,16 +1,21 @@
+using System.Text.Json.Serialization;
+
 public class Presupuesto
 {
     private int idPresupuesto;
     private string nombreDestinatario;
-    private List<PresupuestoDetalle> detalle;
     private DateTime fechaCreacion;
+    private List<PresupuestoDetalle> detalle;
+
 
     public Presupuesto(string nombreDestinatario, DateTime fechaCreacion)
     {
         NombreDestinatario = nombreDestinatario;
         detalle = new List<PresupuestoDetalle>();
         FechaCreacion = fechaCreacion;
-        detalle = new List<PresupuestoDetalle>();
+    }
+    public Presupuesto()
+    {
     }
 
     public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }

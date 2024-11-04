@@ -22,4 +22,9 @@ public class PresupuestoController : ControllerBase
         presupuestoRepository.Create(presupuesto);
         return Ok();
     }
+    [HttpGet]
+    public ActionResult ObtenerPresupuestos()
+    {
+        return Ok(presupuestoRepository.GetAll());
+    }
 }
