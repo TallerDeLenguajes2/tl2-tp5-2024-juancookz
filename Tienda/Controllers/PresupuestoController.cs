@@ -11,7 +11,7 @@ public class PresupuestoController : ControllerBase
     {
         presupuestoRepository = new PresupuestoRepository(@"Data Source=db\Tienda.db;Cache=Shared");
     }
-    [HttpPost("api/Presupuesto")]
+    [HttpPost("Crear")]
     public ActionResult Create([FromForm] string nombreDestinatario)
     {
         if (nombreDestinatario == null)
@@ -22,14 +22,23 @@ public class PresupuestoController : ControllerBase
         presupuestoRepository.Create(presupuesto);
         return Ok();
     }
-    [HttpGet("api/Presupuestos")]
+    [HttpGet("ObtenerTodos")]
     public ActionResult GetAll()
     {
         return Ok(presupuestoRepository.GetAll());
     }
-    [HttpGet("api/Presupuesto/{id}")]
+    [HttpGet("{id}")]
     public ActionResult GetById(int id)
     {
         return Ok(presupuestoRepository.GetById(id));
+    }
+    [HttpPost("AgregarProducto")]
+    public ActionResult AddProduct(int idProducto, int idPresupuesto, int cantidad)
+    {
+        if (!presupuestoRepository.AddProduct(idPresupuesto, idProducto, cantidad))
+        {
+            return NotFound("Producto o presupuesto no encontrado.");
+        }
+        return Ok();
     }
 }

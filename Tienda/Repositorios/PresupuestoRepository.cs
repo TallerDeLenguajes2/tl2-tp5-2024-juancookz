@@ -89,12 +89,33 @@ public class PresupuestoRepository
                     producto.Idproducto = Convert.ToInt32(reader["idProducto"]);
                     producto.Descripcion = reader["Producto"].ToString();
                     producto.Precio = Convert.ToInt32(reader["Precio"]);
-                    PresupuestoDetalle detalle = new PresupuestoDetalle(producto,Convert.ToInt32(reader["Cantidad"]));
+                    PresupuestoDetalle detalle = new PresupuestoDetalle(producto, Convert.ToInt32(reader["Cantidad"]));
                     presupuesto.Detalle.Add(detalle);
                 }
             }
             connection.Close();
         }
         return presupuesto;
+    }
+
+    public bool AddProduct(int idProducto, int idPresupuesto, int cantidad)
+    {
+        var productoRepository = new ProductoRepository(_stringConnection);
+        if (GetById(idPresupuesto) == null || productoRepository.Get(idProducto) == null)
+        {
+            return false;
+        }
+        string query = @"INSERT INTO PresupuestosDetalle (idPresupuesto, idProducto, Cantidad) VALUES (@idPresupuesto, @idProducto, @cantidad);";
+        using (SqliteConnection connection = new SqliteConnection(_stringConnection))
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(query, connection);
+            command.Parameters.AddWithValue("@idPresupuesto", idPresupuesto);
+            command.Parameters.AddWithValue("@idProducto", idProducto);
+            command.Parameters.AddWithValue("@cantidad", cantidad);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+        return true;
     }
 }
