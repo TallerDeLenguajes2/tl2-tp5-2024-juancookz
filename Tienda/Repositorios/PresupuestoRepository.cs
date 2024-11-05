@@ -44,4 +44,57 @@ public class PresupuestoRepository
         }
         return presupuestos;
     }
+    public Presupuesto GetById(int idPresupuesto)
+    {
+        Presupuesto presupuesto = new Presupuesto();
+        int presupuestoEncontrado = 0;
+        string query = @"SELECT 
+                            P.idPresupuesto,
+                            P.NombreDestinatario,
+                            P.FechaCreacion,
+                            PR.idProducto,
+                            PR.Descripcion AS Producto,
+                            PR.Precio,
+                            PD.Cantidad,
+                            (PR.Precio * PD.Cantidad) AS Subtotal
+                        FROM 
+                            Presupuestos P
+                        JOIN 
+                            PresupuestosDetalle PD ON P.idPresupuesto = PD.idPresupuesto
+                        JOIN 
+                            Productos PR ON PD.idProducto = PR.idProducto
+                        WHERE 
+                            P.idPresupuesto = @idPresupuesto;";
+        using (SqliteConnection connection = new SqliteConnection(_stringConnection))
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(query, connection);
+            command.Parameters.AddWithValue("@idPresupuesto", idPresupuesto);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    //Si encuentro un presupuesto
+                    if (presupuestoEncontrado == 0)
+                    {
+                        presupuesto.IdPresupuesto = Convert.ToInt32(reader["idPresupuesto"]);
+                        presupuesto.NombreDestinatario = reader["NombreDestinatario"].ToString();
+                        presupuesto.FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]);
+                        presupuesto.Detalle = [];
+                        presupuestoEncontrado++;
+                    }
+
+                    var producto = new Producto();
+
+                    producto.Idproducto = Convert.ToInt32(reader["idProducto"]);
+                    producto.Descripcion = reader["Producto"].ToString();
+                    producto.Precio = Convert.ToInt32(reader["Precio"]);
+                    PresupuestoDetalle detalle = new PresupuestoDetalle(producto,Convert.ToInt32(reader["Cantidad"]));
+                    presupuesto.Detalle.Add(detalle);
+                }
+            }
+            connection.Close();
+        }
+        return presupuesto;
+    }
 }
