@@ -97,7 +97,6 @@ public class PresupuestoRepository
         }
         return presupuesto;
     }
-
     public bool AddProduct(int idProducto, int idPresupuesto, int cantidad)
     {
         var productoRepository = new ProductoRepository(_stringConnection);
@@ -117,5 +116,25 @@ public class PresupuestoRepository
             connection.Close();
         }
         return true;
+    }
+    public void Delete(int idPresupuesto)
+    {
+        string query = @"DELETE FROM Presupuestos WHERE idPresupuesto = @IdP;";
+        string query2 = @"DELETE FROM PresupuestosDetalle WHERE idPresupuesto = @Id;";
+        using (SqliteConnection connection = new SqliteConnection(_stringConnection))
+        {
+            connection.Open();
+
+            SqliteCommand command2 = new SqliteCommand(query, connection);
+            SqliteCommand command1 = new SqliteCommand(query2, connection);
+
+            command2.Parameters.AddWithValue("@IdP", idPresupuesto);
+            command1.Parameters.AddWithValue("@Id", idPresupuesto);
+
+            command1.ExecuteNonQuery();
+            command2.ExecuteNonQuery();
+
+            connection.Close();
+        }
     }
 }

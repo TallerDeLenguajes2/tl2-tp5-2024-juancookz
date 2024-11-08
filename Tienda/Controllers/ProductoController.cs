@@ -9,7 +9,7 @@ public class ProductoController : ControllerBase
 
     public ProductoController()
     {
-        productoRepository = new ProductoRepository(@"Data Source=db\Tienda.db;Cache=Shared");
+        productoRepository = new ProductoRepository(@"Data Source=db/Tienda.db;Cache=Shared");
     }
 
     [HttpPost]

@@ -9,7 +9,7 @@ public class PresupuestoController : ControllerBase
 
     public PresupuestoController()
     {
-        presupuestoRepository = new PresupuestoRepository(@"Data Source=db\Tienda.db;Cache=Shared");
+        presupuestoRepository = new PresupuestoRepository(@"Data Source=db/Tienda.db;Cache=Shared");
     }
     [HttpPost("Crear")]
     public ActionResult Create([FromForm] string nombreDestinatario)
@@ -35,10 +35,16 @@ public class PresupuestoController : ControllerBase
     [HttpPost("AgregarProducto")]
     public ActionResult AddProduct(int idProducto, int idPresupuesto, int cantidad)
     {
-        if (!presupuestoRepository.AddProduct(idPresupuesto, idProducto, cantidad))
+        if (!presupuestoRepository.AddProduct(idProducto, idPresupuesto, cantidad))
         {
             return NotFound("Producto o presupuesto no encontrado.");
         }
+        return Ok();
+    }
+    [HttpDelete]
+    public ActionResult Delete(int idPresupuesto)
+    {
+        presupuestoRepository.Delete(idPresupuesto);
         return Ok();
     }
 }
